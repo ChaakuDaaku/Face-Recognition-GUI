@@ -49,6 +49,7 @@ class SelectionView(Gtk.Window):
         recog_button.set_label("Recognise")
         recog_button.connect("clicked", self.recog_clicked)
 
+        #Created a Grid to arrange 4 buttons
         grid = Gtk.Grid()
         grid.set_column_spacing(5)
         grid.set_column_homogeneous(True)
@@ -59,25 +60,31 @@ class SelectionView(Gtk.Window):
         grid.attach(train_button, 0, 4, 1, 4)
         grid.attach(recog_button, 1, 4, 1, 4)
 
+        #Now we add the Grid to Window
         self.add(grid)
 
+        #Show the Window
         self.show_all()
 
     def test_clicked(self, button):
+        """ Click Event function for Test Button """
         print("Test Clicked")
         call(["python ./src/test_camera.py"])
 
 
     def gather_clicked(self, button):
+        """ Click Event function for Test Button """
         print("Gather Clicked")   
         call(["python ./src/data_gathering.py"])
 
 
     def train_clicked(self, button):
+        """ Click Event function for Test Button """
         print("Train Clicked")   
         call(["python ./src/trainer.py"])
 
     def recog_clicked(self, button):
+        """ Click Event function for Test Button """
         print("Recognition Clicked")    
         call(["python ./src/recognizer.py"])
 
