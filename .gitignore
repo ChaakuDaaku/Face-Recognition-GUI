@@ -1,2 +1,12 @@
 .vscode
 bash.code-workspace
+aclocal.m4
+autom4te.cache
+config.log
+config.status
+configure
+face-recognition.desktop
+install-sh
+missing
+Makefile.in
+Makefile
