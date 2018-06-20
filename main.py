@@ -83,8 +83,8 @@ class SelectionView(Gtk.Window):
 
     def gather_clicked(self, button):
         """ Click Event function for Test Button """
+        InputWindow().on_button_clicked(self)
         print("Gather Clicked")   
-        call(["python", "./src/data_gathering.py"])
 
     def train_clicked(self, button):
         """ Click Event function for Test Button """
@@ -95,6 +95,41 @@ class SelectionView(Gtk.Window):
         """ Click Event function for Test Button """
         print("Recognition Clicked")    
         call(["python", "./src/recognizer.py"])
+
+class InputDialog(Gtk.Dialog):
+    def __init__(self, parent):
+        Gtk.Dialog.__init__(self, "Face ID", parent, 0,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+             Gtk.STOCK_OK, Gtk.ResponseType.OK))
+
+        self.set_default_size(150, 100)
+
+        label = Gtk.Label("Assign an ID for the person")
+        self.entry = Gtk.Entry()
+        self.entry.set_placeholder_text("eg. 1")
+
+        box = self.get_content_area()
+        box.add(label)
+        box.add(self.entry)
+        self.show_all()
+
+class InputWindow(Gtk.Window):
+    def on_button_clicked(self, widget):
+        dialog = InputDialog(self)
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            global face_id
+            face_id = dialog.entry.get_text()
+            print(face_id)
+            call(["python", "./src/data_gathering.py"])
+
+        
+        elif response == Gtk.ResponseType.CANCEL:
+            print("You cancelled the operation")
+
+        dialog.destroy()
+    
 
 if __name__ == "__main__":
     SelectionView()
