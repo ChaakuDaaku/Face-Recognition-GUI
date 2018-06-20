@@ -5,8 +5,8 @@ import time
 import cv2
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read('trainer/trainer.yml')
-cascadePath = "haarcascade_frontalface_default.xml"
+recognizer.read('./trainer/trainer.yml')
+cascadePath = "./src/haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -16,7 +16,7 @@ id = 0
 
 # names related to ids: example ==> Marcelo: id=1,  etc
 #TODO
-names = ['None', 'Marcelo', 'Paula', 'Ilza', 'Z', 'W'] 
+names = ['None', 'Saurabh', 'Paula', 'Ilza', 'Z', 'W'] 
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -60,6 +60,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         cv2.putText(image, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)  
     
     cv2.imshow('camera',image) 
+    rawCapture.truncate(0)
 
     k = cv2.waitKey(10) & 0xff # Press 'ESC' for exiting video
     if k == 27:
