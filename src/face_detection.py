@@ -4,7 +4,7 @@ from picamera import PiCamera
 import time
 import cv2
 
-faceCascade = cv2.CascadeClassifier('Cascades/haarcascade_frontalface_default.xml')
+faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -14,9 +14,11 @@ rawCapture = PiRGBArray(camera, size=(320, 240))
 
 time.sleep(0.2)
 
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True)
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     frame.vflip = True
     image = frame.array
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray = cv2.equalizeHist(gray)
     faces = faceCascade.detectMultiScale(
         gray,     
         scaleFactor=1.2,
@@ -36,5 +38,5 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
     if k == 27: # press 'ESC' to quit
         break
 
-cap.release()
+camera.close()
 cv2.destroyAllWindows()

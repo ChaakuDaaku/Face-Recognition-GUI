@@ -33,10 +33,15 @@ class SelectionView(Gtk.Window):
         test_button.set_label("Test")
         test_button.connect("clicked", self.test_clicked)
 
+        #Detect Face button
+        detect_button = Gtk.Button()
+        detect_button.set_label("Detect")
+        detect_button.connect("clicked", self.detect_clicked)
+
         #Gather Button
         gather_button = Gtk.Button()
-        gather_button.set_label("Detect")
-        gather_button.connect("clicked", self.detect_clicked)
+        gather_button.set_label("Gather")
+        gather_button.connect("clicked", self.gather_clicked)
 
         #Train Button
         train_button = Gtk.Button()
@@ -54,10 +59,11 @@ class SelectionView(Gtk.Window):
         grid.set_column_homogeneous(True)
         grid.set_row_spacing(5)
         grid.set_row_homogeneous(True)
-        grid.attach(test_button, 0, 0, 1, 4)
-        grid.attach(gather_button, 1, 0, 1, 4)
-        grid.attach(train_button, 0, 4, 1, 4)
-        grid.attach(recog_button, 1, 4, 1, 4)
+        grid.attach(test_button, 0, 0, 1, 2)
+        grid.attach_next_to(detect_button, test_button, Gtk.PositionType.BOTTOM, 1, 2)
+        grid.attach_next_to(gather_button, test_button, Gtk.PositionType.RIGHT, 2, 1)
+        grid.attach_next_to(train_button, gather_button, Gtk.PositionType.BOTTOM, 2, 1)
+        grid.attach_next_to(recog_button, detect_button, Gtk.PositionType.RIGHT, 2, 2)
 
         #Now we add the Grid to Window
         self.add(grid)

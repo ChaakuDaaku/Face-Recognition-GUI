@@ -1,9 +1,18 @@
+# import the necessary packages
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+import time
 import cv2
 import os
 
-cam = cv2.VideoCapture(0)
-cam.set(3, 640) # set video width
-cam.set(4, 480) # set video height
+# initialize the camera and grab a reference to the raw camera capture
+camera = PiCamera()
+camera.resolution = (320, 240)
+camera.framerate = 32
+camera.video_stabilization = True
+rawCapture = PiRGBArray(camera, size=(320, 240))
+
+time.sleep(0.2)
 
 face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
@@ -14,10 +23,11 @@ print "\n [INFO] Initializing face capture. Look the camera and wait ..."
 # Initialize individual sampling face count
 count = 0
 
-while(True):
-    ret, img = cam.read()
-    img = cv2.flip(img, -1) # flip video image vertically
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    frame.vflip = True
+    image = frame.array
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray = cv2.equalizeHist(gray)
     faces = face_detector.detectMultiScale(gray, 1.3, 5)
 
     for (x,y,w,h) in faces:
@@ -27,7 +37,7 @@ while(True):
         # Save the captured image into the datasets folder
         cv2.imwrite("dataset/User." + str(face_id) + '.' + str(count) + ".jpg", gray[y:y+h,x:x+w])
 
-        cv2.imshow('image', img)
+        cv2.imshow('image', image)
 
     k = cv2.waitKey(100) & 0xff # Press 'ESC' for exiting video
     if k == 27:
@@ -37,5 +47,5 @@ while(True):
 
 # Do a bit of cleanup
 print "\n [INFO] Exiting Program and cleanup stuff"
-cam.release()
+camera.close()
 cv2.destroyAllWindows()
