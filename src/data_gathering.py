@@ -14,7 +14,7 @@ rawCapture = PiRGBArray(camera, size=(320, 240))
 
 time.sleep(0.2)
 
-face_detector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_detector = cv2.CascadeClassifier('./src/haarcascade_frontalface_default.xml')
 
 # For each person, enter one numeric face id
 face_id = input('\n enter user id end press <return> ==>  ')

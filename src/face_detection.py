@@ -4,7 +4,7 @@ from picamera import PiCamera
 import time
 import cv2
 
-faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+faceCascade = cv2.CascadeClassifier('./src/haarcascade_frontalface_default.xml')
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()

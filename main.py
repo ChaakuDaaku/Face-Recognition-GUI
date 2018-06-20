@@ -84,8 +84,7 @@ class SelectionView(Gtk.Window):
     def gather_clicked(self, button):
         """ Click Event function for Test Button """
         print("Gather Clicked")   
-        call(["python:", "./src/data_gathering.py"])
-
+        call(["python", "./src/data_gathering.py"])
 
     def train_clicked(self, button):
         """ Click Event function for Test Button """
