@@ -16,7 +16,6 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from subprocess import call
 
-
 class SelectionView(Gtk.Window):
     """ Window class which contains the button elements """
     def __init__(self):
@@ -36,8 +35,8 @@ class SelectionView(Gtk.Window):
 
         #Gather Button
         gather_button = Gtk.Button()
-        gather_button.set_label("Gather")
-        gather_button.connect("clicked", self.gather_clicked)
+        gather_button.set_label("Detect")
+        gather_button.connect("clicked", self.detect_clicked)
 
         #Train Button
         train_button = Gtk.Button()
@@ -69,24 +68,28 @@ class SelectionView(Gtk.Window):
     def test_clicked(self, button):
         """ Click Event function for Test Button """
         print("Test Clicked")
-        call(["python ./src/test_camera.py"])
+        call(["python", "./src/test_camera.py"])
 
+    def detect_clicked(self, button):
+        """ Click Event function for Detect Button """
+        print("Detect Clicked")
+        call(["python", "./src/face_detection.py"])
 
     def gather_clicked(self, button):
         """ Click Event function for Test Button """
         print("Gather Clicked")   
-        call(["python ./src/data_gathering.py"])
+        call(["python:", "./src/data_gathering.py"])
 
 
     def train_clicked(self, button):
         """ Click Event function for Test Button """
         print("Train Clicked")   
-        call(["python ./src/trainer.py"])
+        call(["python", "./src/trainer.py"])
 
     def recog_clicked(self, button):
         """ Click Event function for Test Button """
         print("Recognition Clicked")    
-        call(["python ./src/recognizer.py"])
+        call(["python", "./src/recognizer.py"])
 
 if __name__ == "__main__":
     SelectionView()
